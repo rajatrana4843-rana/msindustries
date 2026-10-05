@@ -1,0 +1,91 @@
+# BEGIN cPanel-generated php ini directives
+<IfModule php8_module>
+   php_value error_log "/home/msindustries/logs/php.error.log"
+   php_flag log_errors On
+</IfModule>
+
+<IfModule lsapi_module>
+   php_value error_log "/home/msindustries/logs/php.error.log"
+   php_flag log_errors On
+</IfModule>
+# END cPanel-generated php ini directives
+
+
+# PHP 8.2 Handler
+<IfModule mime_module>
+    AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+
+
+# =====================================
+# URL REWRITE SETTINGS
+# =====================================
+
+RewriteEngine On
+
+# =====================================
+# FORCE WWW
+# cateringcountermanufacturer.com
+# -> www.cateringcountermanufacturer.com
+# =====================================
+
+RewriteCond %{HTTP_HOST} ^cateringcountermanufacturer\.com$ [NC]
+RewriteRule ^(.*)$ https://www.cateringcountermanufacturer.com/$1 [R=301,L]
+
+
+
+# -------------------------------------
+# index.html ya /index ko homepage /
+# par redirect karo
+# -------------------------------------
+
+RewriteCond %{THE_REQUEST} \s/+index(\.html)?[\s?] [NC]
+RewriteRule ^index(\.html)?$ / [R=301,L]
+
+
+# -------------------------------------
+# OLD BLOG1 URL KO NEW URL PAR REDIRECT
+# /blog1 -> /customized-catering-counters-near-me
+# -------------------------------------
+
+RewriteCond %{THE_REQUEST} \s/+blog1(\.html)?[\s?] [NC]
+RewriteRule ^blog1(\.html)?$ /customized-catering-counters-near-me [R=301,L]
+
+
+# -------------------------------------
+# NEW CUSTOM URL KO blog1.html FILE SE LOAD KARO
+# -------------------------------------
+
+RewriteRule ^customized-catering-counters-near-me/?$ blog1.html [L]
+
+
+# -------------------------------------
+# .html EXTENSION REMOVE KARO
+# blog.html -> /blog
+# -------------------------------------
+
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^(.+)\.html$ /$1 [R=301,L,NE]
+
+
+# -------------------------------------
+# CLEAN URL KO .html FILE SE LOAD KARO
+# /blog -> blog.html
+# -------------------------------------
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+
+# Homepage
+DirectoryIndex index.html
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
